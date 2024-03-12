@@ -1,0 +1,16 @@
+package com.citizen_authentication.web.service;
+
+import com.citizen_authentication.models.entities.Role;
+import com.citizen_authentication.models.entities.User;
+import com.citizen_authentication.models.dto.request.LoginDto;
+import com.citizen_authentication.models.dto.request.RegisterDto;
+import org.springframework.http.ResponseEntity;
+
+public interface IUserService {
+    String authenticate(LoginDto loginDto);
+
+
+    ResponseEntity<?> register (RegisterDto registerDto);
+    Role saveRole(Role role);
+    User saverUser (User user) ;
+}
