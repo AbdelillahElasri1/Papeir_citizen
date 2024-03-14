@@ -35,6 +35,9 @@ public class User implements Serializable, UserDetails {
     private String password;
     private String userRole;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Documents> documents = new ArrayList<>();
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<Role> roles;
 

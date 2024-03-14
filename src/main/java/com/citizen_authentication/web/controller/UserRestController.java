@@ -1,7 +1,7 @@
 package com.citizen_authentication.web.controller;
 
-import com.citizen_authentication.models.dto.request.LoginDto;
-import com.citizen_authentication.models.dto.request.RegisterDto;
+import com.citizen_authentication.models.dto.auth.request.LoginDto;
+import com.citizen_authentication.models.dto.auth.request.RegisterDto;
 import com.citizen_authentication.web.service.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

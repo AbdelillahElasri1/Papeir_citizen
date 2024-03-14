@@ -1,4 +1,4 @@
-package com.citizen_authentication.models.dto.response;
+package com.citizen_authentication.models.dto.auth.response;
 
 import lombok.Data;
 
