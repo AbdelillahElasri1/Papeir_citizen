@@ -20,7 +20,7 @@ public class Documents implements Serializable {
     private Integer id;
 
     private String title;
-    private String content;
+    private byte[] content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

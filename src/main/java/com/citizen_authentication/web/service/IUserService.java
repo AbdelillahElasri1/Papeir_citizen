@@ -7,7 +7,7 @@ import com.citizen_authentication.models.dto.auth.request.RegisterDto;
 import org.springframework.http.ResponseEntity;
 
 public interface IUserService {
-    String authenticate(LoginDto loginDto);
+    ResponseEntity<?> authenticate(LoginDto loginDto);
 
 
     ResponseEntity<?> register (RegisterDto registerDto);

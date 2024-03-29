@@ -1,4 +1,4 @@
-package com.citizen_authentication.web.service;
+package com.citizen_authentication.web.service.implementation;
 
 import com.citizen_authentication.security.utils.JwtUtilities;
 import com.citizen_authentication.models.dto.auth.response.BearerToken;
@@ -9,6 +9,7 @@ import com.citizen_authentication.models.entities.User;
 import com.citizen_authentication.models.enums.RoleName;
 import com.citizen_authentication.models.repositories.RoleRepository;
 import com.citizen_authentication.models.repositories.UserRepository;
+import com.citizen_authentication.web.service.IUserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,9 +22,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
@@ -37,7 +36,7 @@ public class UserService implements IUserService {
     private final JwtUtilities jwtUtilities;
 
     @Override
-    public String authenticate(LoginDto loginDto) {
+    public ResponseEntity<?> authenticate(LoginDto loginDto) {
         Authentication authentication= authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                 loginDto.getEmail(),loginDto.getPassword()
@@ -50,7 +49,10 @@ public class UserService implements IUserService {
             user.getRoles().forEach(r-> rolesNames.add(r.getRoleName()));
             String token = jwtUtilities.generateToken(user.
                 getUsername(),rolesNames);
-            return "User login successful! Token: " + token;
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "User login successful!");
+        response.put("token", token);
+        return ResponseEntity.ok(response);
     }
 
     @Override

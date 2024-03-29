@@ -25,7 +25,7 @@ public class SpringSecurityConfig {
         http
                 .csrf().disable()
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/public/**", "/user/**").permitAll()
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/public/**", "/user/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/admin/**").hasAuthority("ADMIN"));
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
