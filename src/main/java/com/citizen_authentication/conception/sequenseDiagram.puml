@@ -1,0 +1,21 @@
+@startuml
+actor User
+participant "System" as System
+actor Admin
+
+User -> System: Register
+User -> System: Login
+
+alt User
+    User -> System: Create Act Demand
+else Admin
+    Admin -> System: Manage Roles
+end
+
+User -> System: Upload Document
+User -> System: View Act Demands
+User -> System: View Documents
+User -> System: Edit Profile
+User -> System: Logout
+Admin -> System: Delete Document
+@enduml

@@ -1,0 +1,47 @@
+@startuml
+package "Entities" {
+    class ActDemand {
+        - id: Integer
+        - email: String
+        - type: CartType
+        - carteTypeInput: String
+    }
+
+    class User {
+        - id: Integer
+        - firstName: String
+        - lastName: String
+        - email: String
+        - password: String
+        - userRole: String
+    }
+
+    class Document {
+        - id: Integer
+        - title: String
+        - email: String
+        - message: String
+        - content: byte[]
+    }
+
+    enum CartType {
+        CIN
+        PASSPORT
+    }
+
+    enum RoleName {
+        USER
+        ADMIN
+    }
+}
+
+class Role {
+    - id: Integer
+    - roleName: RoleName
+}
+
+User "1" --> "0.*" ActDemand : owns
+User "1" --> "0.*" Document : has
+
+User -- Role : has
+@enduml

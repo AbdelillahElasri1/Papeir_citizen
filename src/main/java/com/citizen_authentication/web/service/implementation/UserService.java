@@ -1,5 +1,6 @@
 package com.citizen_authentication.web.service.implementation;
 
+import com.citizen_authentication.models.dto.response.UserResponse;
 import com.citizen_authentication.security.utils.JwtUtilities;
 import com.citizen_authentication.models.dto.auth.response.BearerToken;
 import com.citizen_authentication.models.dto.auth.request.LoginDto;
@@ -12,6 +13,7 @@ import com.citizen_authentication.models.repositories.UserRepository;
 import com.citizen_authentication.web.service.IUserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -34,6 +37,7 @@ public class UserService implements IUserService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtilities jwtUtilities;
+    private final ModelMapper modelMapper;
 
     @Override
     public ResponseEntity<?> authenticate(LoginDto loginDto) {
@@ -64,8 +68,7 @@ public class UserService implements IUserService {
             user.setEmail(registerDto.getEmail());
             user.setFirstName(registerDto.getFirstName());
             user.setLastName(registerDto.getLastName());
-            user.setPassword(passwordEncoder.encode(registerDto.
-                        getPassword()));
+            user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
             String myrole = "user";
             if (registerDto.getUserRole().equals("") || registerDto.getUserRole().equals("user")) {
                 myrole = "USER";
@@ -92,5 +95,23 @@ public class UserService implements IUserService {
     @Override
     public User saverUser(User user) {
         return userRepository.save(user);
+    }
+
+    @Override
+    public List<UserResponse> getAllUsers() {
+        List<User> userList = userRepository.findAll();
+        return userList.stream().map(user -> modelMapper.map(user,UserResponse.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserResponse> getAllCitizen() {
+        List<User> citizenList = userRepository.findByUserRole("user");
+        return citizenList.stream().map(citizen -> modelMapper.map(citizen, UserResponse.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserResponse> getAllAdmin() {
+        List<User> adminList = userRepository.findByUserRole("admin");
+        return adminList.stream().map(admin -> modelMapper.map(admin, UserResponse.class)).collect(Collectors.toList());
     }
 }

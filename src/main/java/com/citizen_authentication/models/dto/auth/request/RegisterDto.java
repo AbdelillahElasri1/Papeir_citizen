@@ -11,4 +11,7 @@ public class RegisterDto implements Serializable {
     private String email;
     private String password;
     private String userRole;
+
+//    public RegisterDto(String mail, String password, String john, String doe, String user) {
+//    }
 }

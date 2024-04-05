@@ -1,0 +1,26 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor User
+actor Admin
+
+rectangle System {
+    User --> (Register)
+    User --> (Login)
+    User --> (Create Act Demand)
+    User --> (View Act Demands)
+    User --> (View Documents)
+    User --> (Logout)
+
+    Admin --> (Logout)
+    Admin --> (Admin Login)
+    Admin --> (Edit Profile)
+    Admin --> (Upload Document)
+    Admin --> (Manage Roles)
+    Admin --> (Delete Document)
+}
+
+
+
+@enduml

@@ -1,5 +1,6 @@
 package com.citizen_authentication.models.entities;
 
+import com.citizen_authentication.models.dto.request.ActRequest;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -35,9 +36,16 @@ public class User implements Serializable, UserDetails {
     private String password;
     private String userRole;
 
+    //Relationship between actDemand and user
+    @OneToMany(mappedBy = "user")
+    private List<ActDemand> actDemands;
+
+
+    //Relationship between Document and user
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Documents> documents = new ArrayList<>();
 
+    //Relationship between Role and user
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<Role> roles;
 
